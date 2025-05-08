@@ -9,24 +9,46 @@ public class JogoMinecraft {
         // var acao =  gerador.nextInt(3);
         while(true) {
             int numeroAleatorio = gerador.nextInt(3);
-            
+            int probDano = gerador.nextInt(4);
+            // int Dano = ;
             switch (numeroAleatorio) {
                 case 0:
                     cacador.coletarMadeira();
-                    break;
-                    // return;
+                    if (probDano == 3){
+                        cacador.levarDano();
+                    }
+                    if (!cacador.estaVivo()) {
+                        System.out.println("Game Over! Seu personagem morreu!");
+                        return;
+                    } break;
+
                 case 1:
                     cacador.construir();
-                    break;
-                    // return;
+                    if (probDano == 3){
+                        cacador.levarDano();
+                    }
+                    if (!cacador.estaVivo()) {
+                        System.out.println("Game Over! Seu personagem morreu!");
+                        return;
+                    } break;
+
+
                 case 2: 
                     cacador.minerar();
-                    break;
-                    // return;
-            }
+                    if (probDano == 3){
+                        cacador.levarDano();
+                    }
+                    if (!cacador.estaVivo()) {
+                        System.out.println("Game Over! Seu personagem morreu!");
+                        return;
+                    } break;
+
+                    
+                }    
+
             System.out.println(cacador);
             System.out.println("============");
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         }
     }
 }
