@@ -22,10 +22,11 @@ public class JogoMinecraft {
                     System.out.println();
                     acoesSteve(steveConstrutor);
                     System.out.println();
+                    atacarRandom(cacador, steveConstrutor);
                     tomarDano(steveConstrutor);
                     tomarDano(cacador);
-                    verificarSeEstaVivo(cacador);
-                    verificarSeEstaVivo(steveConstrutor);
+                    verificarSeEstaVivo(cacador, steveConstrutor);
+                    verificarSeEstaVivo(steveConstrutor, cacador);
                      break;
 
                 case 1:
@@ -33,10 +34,11 @@ public class JogoMinecraft {
                     System.out.println();
                     acoesSteve(steveConstrutor);
                     System.out.println();
+                    atacarRandom(cacador, steveConstrutor);
                     tomarDano(steveConstrutor);
                     tomarDano(cacador);
-                    verificarSeEstaVivo(cacador);
-                    verificarSeEstaVivo(steveConstrutor);
+                    verificarSeEstaVivo(cacador, steveConstrutor);
+                    verificarSeEstaVivo(steveConstrutor, cacador);
                      break;
 
                 case 2: 
@@ -44,10 +46,11 @@ public class JogoMinecraft {
                     System.out.println();
                     acoesSteve(steveConstrutor);
                     System.out.println();
+                    atacarRandom(cacador, steveConstrutor);
                     tomarDano(steveConstrutor);
                     tomarDano(cacador);
-                    verificarSeEstaVivo(cacador);
-                    verificarSeEstaVivo(steveConstrutor);
+                    verificarSeEstaVivo(cacador, steveConstrutor);
+                    verificarSeEstaVivo(steveConstrutor, cacador);
                      break;  
                 }    
             if (cacador.estaVivo()) {
@@ -63,17 +66,19 @@ public class JogoMinecraft {
         }
     }
 
-    private static void verificarSeEstaVivo(JogadorMinecraft jogador) {
+    private static void verificarSeEstaVivo(JogadorMinecraft jogador, JogadorMinecraft jogador2) {
         if (!jogador.estaVivo()) {
             System.out.printf("O personagem %s morreu!%n", jogador.nome);
             jogador.foraDoJogo = true; 
-            // System.exit(0); 
+            if (!jogador2.foraDoJogo){
+                System.out.println(String.format("O %s é o vencedor do duelo", jogador2.nome)); 
+            }
         }
     }
 
     private static void acoesSteve(JogadorMinecraft jogador) {
-    var geradorv2 = new Random();
-    int stevePrioridade = geradorv2.nextInt(10);
+    var geradorV2 = new Random();
+    int stevePrioridade = geradorV2.nextInt(10);
 
     switch (stevePrioridade) {
      case 0, 1, 2, 3, 4, 5:
@@ -90,14 +95,28 @@ public class JogoMinecraft {
 
     }
     }
-
+    
     private static void tomarDano(JogadorMinecraft jogador) {
-      var geradorv3 = new Random();
-      int probDano = geradorv3.nextInt(4);
+      var geradorV3 = new Random();
+      int probDano = geradorV3.nextInt(4);
         if (probDano == 0) {
             System.out.println();
             jogador.levarDano();
             System.out.println();
+        }
+    }
+
+    private static void atacarRandom(JogadorMinecraft jogador, JogadorMinecraft jogador2) {
+        var geradorV4 = new Random();
+        int probAtacar = geradorV4.nextInt(2);
+        if (jogador.estaVivo() && jogador2.estaVivo()){
+            if (probAtacar == 0){
+                System.out.println(String.format("%s atacou o %s!", jogador.nome, jogador2.nome));
+                jogador2.vida --;          
+            } else {
+                System.out.println(String.format("%s atacou o %s!", jogador2.nome, jogador.nome));
+                jogador.vida --; 
+            }
         }
     }
 }

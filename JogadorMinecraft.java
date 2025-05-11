@@ -2,10 +2,11 @@ import java.util.*;
 
 public class JogadorMinecraft {
     public String nome;
-    private int vida;
+    public int vida;
     private int blocosColetados;
     private List<String> inventario;
     public boolean foraDoJogo;
+    public boolean vencedor;
 
     public JogadorMinecraft(String nome) {
         this.nome = nome;
@@ -13,6 +14,7 @@ public class JogadorMinecraft {
         this.blocosColetados = 0;
         this.inventario = new ArrayList<>();
         this.foraDoJogo = false;
+        this.vencedor = false;
     }
 
     public void minerar() {
