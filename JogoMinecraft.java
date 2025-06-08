@@ -8,13 +8,11 @@ public class JogoMinecraft {
         JogadorMinecraft cacador = new JogadorMinecraft("cacador");
         JogadorMinecraft steveConstrutor = new JogadorMinecraft ("Steve Construtor");
 
-        // var acao =  gerador.nextInt(3);
         while(true) {
             int numeroAleatorio = gerador.nextInt(3);
             if (cacador.foraDoJogo && steveConstrutor.foraDoJogo){
                 return;
             }
-            // int Dano = ;
 
             switch (numeroAleatorio) {
                 case 0:
