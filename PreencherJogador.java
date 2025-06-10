@@ -25,11 +25,11 @@ public class PreencherJogador {
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     String nome = rs.getString("nome");
-                    int nr_derrotas = rs.getInt("nr_derrotas");
-                    int nr_vitorias = rs.getInt("nr_vitorias");
-                    int prob_mineirar = rs.getInt("prob_mineirar");
-                    int prob_madeira = rs.getInt("prob_madeira");
-                    int prob_construir = rs.getInt("prob_construir");
+                    double nr_derrotas = rs.getDouble("nr_derrotas");
+                    double nr_vitorias = rs.getDouble("nr_vitorias");
+                    double prob_mineirar = rs.getDouble("prob_mineirar");
+                    double prob_madeira = rs.getDouble("prob_madeira");
+                    double prob_construir = rs.getDouble("prob_construir");
 
                     JogadorDTO personagem = new JogadorDTO(id, nome, prob_construir, prob_madeira, prob_mineirar, nr_vitorias, nr_derrotas);
                     listaPersonagens.add(personagem);

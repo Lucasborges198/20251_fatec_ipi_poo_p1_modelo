@@ -1,16 +1,13 @@
-
-
-
 public class JogadorDTO {
     public int id;
     public String nome;
-    public int prob_construir;
-    public int prob_madeira;
-    public int prob_mineirar;
-    public int nr_vitorias;
-    public int nr_derrotas;
+    public double prob_construir;
+    public double prob_madeira;
+    public double prob_mineirar;
+    public double nr_vitorias;
+    public double nr_derrotas;
 
-    public JogadorDTO(int id, String nome, int prob_construir, int prob_madeira, int prob_mineirar, int nr_vitorias, int nr_derrotas) {
+    public JogadorDTO(int id, String nome, double prob_construir, double prob_madeira, double prob_mineirar, double nr_vitorias, double nr_derrotas) {
         this.id = id;
         this.nome = nome;
         this.prob_construir = prob_construir;
