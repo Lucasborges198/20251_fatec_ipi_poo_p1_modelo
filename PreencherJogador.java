@@ -20,13 +20,14 @@ public class PreencherJogador {
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     String nome = rs.getString("nome");
-                    double nr_derrotas = rs.getDouble("nr_derrotas");
-                    double nr_vitorias = rs.getDouble("nr_vitorias");
+                    int nr_derrotas = rs.getInt("nr_derrotas");
+                    int nr_vitorias = rs.getInt("nr_vitorias");
                     double prob_mineirar = rs.getDouble("prob_mineirar");
                     double prob_madeira = rs.getDouble("prob_madeira");
                     double prob_construir = rs.getDouble("prob_construir");
 
-                    JogadorDTO personagem = new JogadorDTO(id, nome, prob_construir, prob_madeira, prob_mineirar, nr_vitorias, nr_derrotas);
+                    JogadorDTO personagem = new JogadorDTO(id, nome, prob_construir, prob_madeira, prob_mineirar,
+                            nr_vitorias, nr_derrotas);
                     listaPersonagens.add(personagem);
                 }
             }
@@ -34,5 +35,22 @@ public class PreencherJogador {
             System.out.println("Exceção: " + e.getMessage());
         }
         return listaPersonagens;
+    }
+
+    public static void atualizarValoresDb(JogadorMinecraft jogador) {
+
+        String sql = "UPDATE tb_personagem SET nr_vitorias = ?, nr_derrotas = ? WHERE id = ?";
+        try (Connection conexao = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/postgres",
+                "postgres",
+                "p2poo");
+                PreparedStatement pre = conexao.prepareStatement(sql)) {
+                    pre.setInt(1, jogador.vencedor);
+                    pre.setInt(2, jogador.derrotas);
+                    pre.setInt(3, jogador.id);
+                    pre.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Não foi possivel realizar o update na tabela");
+        }
     }
 }

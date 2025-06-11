@@ -6,24 +6,27 @@ public class JogadorMinecraft {
     private int blocosColetados;
     private List<String> inventario;
     public boolean foraDoJogo;
-    public boolean vencedor;
+    public int vencedor;
     public double probConstruir;
     public double probMadeira;
     public double probMineirar;
-
+    public int derrotas;
+    public int id;
     
 
 
     public JogadorMinecraft(JogadorDTO dto) {
+        this.id = dto.id;
         this.nome = dto.nome;
         this.vida = 10;
         this.blocosColetados = 0;
-        this.inventario = new ArrayList<>(dto.inventario);
+        this.inventario = new ArrayList<>();
         this.foraDoJogo = false;
-        this.vencedor = false;
+        this.vencedor = dto.nr_vitorias;
         this.probConstruir = dto.prob_construir;
         this.probMadeira = dto.prob_madeira;
         this.probMineirar = dto.prob_mineirar;
+        this.derrotas = dto.nr_derrotas;
     }
 
     public void minerar() {

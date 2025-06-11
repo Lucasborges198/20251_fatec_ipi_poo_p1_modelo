@@ -13,6 +13,8 @@ public class JogoMinecraft {
         while(true) {
             int numeroAleatorio = gerador.nextInt(3);
             if (cacador.foraDoJogo && steveConstrutor.foraDoJogo){
+                PreencherJogador.atualizarValoresDb(cacador);
+                PreencherJogador.atualizarValoresDb(steveConstrutor);
                 return;
             }
 
@@ -63,7 +65,7 @@ public class JogoMinecraft {
               System.out.println();
             }
             System.out.println("=============================================================");
-            Thread.sleep(2000);
+            Thread.sleep(0);
         }
     }
 
@@ -113,10 +115,18 @@ public class JogoMinecraft {
         if (jogador.estaVivo() && jogador2.estaVivo()){
             if (probAtacar == 0){
                 System.out.println(String.format("%s atacou o %s!", jogador.nome, jogador2.nome));
-                jogador2.vida --;          
+                jogador2.vida --;
+                if (!jogador2.estaVivo()){
+                    jogador.vencedor = jogador.vencedor +  1;
+                    jogador2.derrotas = jogador2.derrotas + 1;
+                }         
             } else {
                 System.out.println(String.format("%s atacou o %s!", jogador2.nome, jogador.nome));
-                jogador.vida --; 
+                jogador.vida --;
+                if (!jogador.estaVivo()){
+                    jogador2.vencedor = jogador2.vencedor +  1;
+                    jogador.derrotas = jogador.derrotas + 1;
+                } 
             }
         }
     }

@@ -6,11 +6,11 @@ public class JogadorDTO {
     public double prob_construir;
     public double prob_madeira;
     public double prob_mineirar;
-    public double nr_vitorias;
-    public double nr_derrotas;
+    public int nr_vitorias;
+    public int nr_derrotas;
     public List<String> inventario;
 
-    public JogadorDTO(int id, String nome, double prob_construir, double prob_madeira, double prob_mineirar, double nr_vitorias, double nr_derrotas) {
+    public JogadorDTO(int id, String nome, double prob_construir, double prob_madeira, double prob_mineirar, int nr_vitorias, int nr_derrotas) {
         this.id = id;
         this.nome = nome;
         this.prob_construir = prob_construir;
