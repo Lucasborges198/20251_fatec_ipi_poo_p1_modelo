@@ -1,14 +1,14 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
 public class JogoMinecraft {
     public static void main(String[] args) throws Exception{
+        List<JogadorDTO> listaPersonagem = PreencherJogador.buscarPersonagens();
 
         var gerador = new Random();
-        JogadorMinecraft cacador = new JogadorMinecraft("cacador");
-        JogadorMinecraft steveConstrutor = new JogadorMinecraft ("Steve Construtor");
+        JogadorMinecraft cacador = new JogadorMinecraft(listaPersonagem.get(0));
+        JogadorMinecraft steveConstrutor = new JogadorMinecraft(listaPersonagem.get(1));        
 
         while(true) {
             int numeroAleatorio = gerador.nextInt(3);
@@ -27,7 +27,7 @@ public class JogoMinecraft {
                     tomarDano(cacador);
                     verificarSeEstaVivo(cacador, steveConstrutor);
                     verificarSeEstaVivo(steveConstrutor, cacador);
-                     break;
+                    break;
 
                 case 1:
                     cacador.construir();
@@ -39,7 +39,7 @@ public class JogoMinecraft {
                     tomarDano(cacador);
                     verificarSeEstaVivo(cacador, steveConstrutor);
                     verificarSeEstaVivo(steveConstrutor, cacador);
-                     break;
+                    break;
 
                 case 2: 
                     cacador.minerar();
@@ -51,8 +51,9 @@ public class JogoMinecraft {
                     tomarDano(cacador);
                     verificarSeEstaVivo(cacador, steveConstrutor);
                     verificarSeEstaVivo(steveConstrutor, cacador);
-                     break;  
-                }    
+                    break;  
+                } 
+
             if (cacador.estaVivo()) {
               System.out.println(cacador); 
               System.out.println();

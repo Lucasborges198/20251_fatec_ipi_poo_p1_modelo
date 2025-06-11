@@ -1,8 +1,4 @@
 import java.util.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 
 public class JogadorMinecraft {
     public String nome;
@@ -11,16 +7,23 @@ public class JogadorMinecraft {
     private List<String> inventario;
     public boolean foraDoJogo;
     public boolean vencedor;
+    public double probConstruir;
+    public double probMadeira;
+    public double probMineirar;
+
     
 
 
-    public JogadorMinecraft(String nome) {
-        this.nome = nome;
+    public JogadorMinecraft(JogadorDTO dto) {
+        this.nome = dto.nome;
         this.vida = 10;
         this.blocosColetados = 0;
-        this.inventario = new ArrayList<>();
+        this.inventario = new ArrayList<>(dto.inventario);
         this.foraDoJogo = false;
         this.vencedor = false;
+        this.probConstruir = dto.prob_construir;
+        this.probMadeira = dto.prob_madeira;
+        this.probMineirar = dto.prob_mineirar;
     }
 
     public void minerar() {

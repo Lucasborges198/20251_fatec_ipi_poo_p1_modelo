@@ -4,12 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Statement;
 
 public class PreencherJogador {
-    public List<String> ListaPersonagens;
-
-    public static void main(String[] args) {
+    public static List<JogadorDTO> buscarPersonagens() {
+        List<JogadorDTO> listaPersonagens = new ArrayList<>();
         String sql = "select * from tb_personagem";
         try {
             Connection conexao = DriverManager.getConnection(
@@ -17,10 +15,7 @@ public class PreencherJogador {
                     "postgres",
                     "p2poo");
             if (conexao != null) {
-                System.out.println("Conexao estabelecida com sucesso!");
                 PreparedStatement pre = conexao.prepareStatement(sql);
-                System.out.println(pre);
-                List<JogadorDTO> listaPersonagens = new ArrayList<>();
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("id");
@@ -34,12 +29,10 @@ public class PreencherJogador {
                     JogadorDTO personagem = new JogadorDTO(id, nome, prob_construir, prob_madeira, prob_mineirar, nr_vitorias, nr_derrotas);
                     listaPersonagens.add(personagem);
                 }
-                System.out.println();
-            } else {
-                System.out.println("Conexao não estabelecida!");
             }
         } catch (Exception e) {
             System.out.println("Exceção: " + e.getMessage());
         }
+        return listaPersonagens;
     }
 }
