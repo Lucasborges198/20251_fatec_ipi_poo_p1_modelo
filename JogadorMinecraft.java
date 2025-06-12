@@ -1,30 +1,49 @@
 import java.util.*;
 
 public class JogadorMinecraft {
-    private String nome;
-    private int vida;
+    public String nome;
+    public int vida;
     private int blocosColetados;
     private List<String> inventario;
+    public boolean foraDoJogo;
+    public int vencedor;
+    public double probConstruir;
+    public double probMadeira; 
+    public double probMineirar;
+    public int derrotas;
+    public int id;
+    
 
-    public JogadorMinecraft(String nome) {
-        this.nome = nome;
+
+    public JogadorMinecraft(JogadorDTO dto) {
+        this.id = dto.id;
+        this.nome = dto.nome;
         this.vida = 10;
         this.blocosColetados = 0;
         this.inventario = new ArrayList<>();
+        this.foraDoJogo = false;
+        this.vencedor = dto.nr_vitorias;
+        this.probConstruir = dto.prob_construir;
+        this.probMadeira = dto.prob_madeira;
+        this.probMineirar = dto.prob_mineirar;
+        this.derrotas = dto.nr_derrotas;
     }
 
     public void minerar() {
+        if (estaVivo())
         System.out.println(nome + " está minerando...");
         blocosColetados++;
         inventario.add("Pedra");
     }
 
     public void coletarMadeira() {
+        if (estaVivo())
         System.out.println(nome + " coletou madeira.");
         inventario.add("Madeira");
     }
 
     public void construir() {
+        if (estaVivo())
         if (inventario.size() >= 2) {
             System.out.println(nome + " construiu algo com seus recursos!");
             inventario.remove(0);
@@ -35,12 +54,27 @@ public class JogadorMinecraft {
     }
 
     public void levarDano() {
-        vida--;
-        System.out.println(nome + " levou dano! Vida atual: " + vida);
+        if (estaVivo()) {
+           vida--;
+           System.out.println(nome + " levou dano! Vida atual: " + vida);
+        }
     }
 
     public boolean estaVivo() {
-        return vida > 0;
+        return vida > 0 && !foraDoJogo;
+    }
+
+    public void randProbs(){
+        var geradorR1 = new Random();
+
+        double newProbConstruir = geradorR1.nextDouble(1); 
+        double newProbMadeira = geradorR1.nextDouble(1 - newProbConstruir);
+        double newProbMineirar = (1 - (newProbConstruir + newProbMadeira));
+
+        probConstruir = newProbConstruir;
+        probMadeira = newProbMadeira;
+        probMineirar = newProbMineirar;
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-Integrantes prova p1-poo: 
+Integrantes prova p2-poo: 
 
 1:
     nome: Lucas Borges Ribeiro
