@@ -49,7 +49,6 @@ public class JogoMinecraft {
     private static void acoesPersonagem(JogadorMinecraft jogador) {
         double probConstruir = jogador.probConstruir; 
         double probMadeira = jogador.probMadeira; 
-        // double probMineirar = jogador.probMineirar; 
 
         var geradorV2 = new Random();
         double stevePrioridade = geradorV2.nextDouble(1); 
