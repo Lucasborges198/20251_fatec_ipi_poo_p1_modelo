@@ -1,71 +1,38 @@
 import java.util.List;
 import java.util.Random;
 
-
 public class JogoMinecraft {
     public static void main(String[] args) throws Exception{
         List<JogadorDTO> listaPersonagem = PreencherJogador.buscarPersonagens();
 
-        var gerador = new Random();
         JogadorMinecraft cacador = new JogadorMinecraft(listaPersonagem.get(0));
-        JogadorMinecraft steveConstrutor = new JogadorMinecraft(listaPersonagem.get(1));        
-
+        JogadorMinecraft steveConstrutor = new JogadorMinecraft(listaPersonagem.get(1));   
         while(true) {
-            int numeroAleatorio = gerador.nextInt(3);
             if (cacador.foraDoJogo && steveConstrutor.foraDoJogo){
                 PreencherJogador.atualizarValoresDb(cacador);
                 PreencherJogador.atualizarValoresDb(steveConstrutor);
                 return;
             }
-
-            switch (numeroAleatorio) {
-                case 0:
-                    cacador.coletarMadeira();
-                    System.out.println();
-                    acoesSteve(steveConstrutor);
-                    System.out.println();
-                    atacarRandom(cacador, steveConstrutor);
-                    tomarDano(steveConstrutor);
-                    tomarDano(cacador);
-                    verificarSeEstaVivo(cacador, steveConstrutor);
-                    verificarSeEstaVivo(steveConstrutor, cacador);
-                    break;
-
-                case 1:
-                    cacador.construir();
-                    System.out.println();
-                    acoesSteve(steveConstrutor);
-                    System.out.println();
-                    atacarRandom(cacador, steveConstrutor);
-                    tomarDano(steveConstrutor);
-                    tomarDano(cacador);
-                    verificarSeEstaVivo(cacador, steveConstrutor);
-                    verificarSeEstaVivo(steveConstrutor, cacador);
-                    break;
-
-                case 2: 
-                    cacador.minerar();
-                    System.out.println();
-                    acoesSteve(steveConstrutor);
-                    System.out.println();
-                    atacarRandom(cacador, steveConstrutor);
-                    tomarDano(steveConstrutor);
-                    tomarDano(cacador);
-                    verificarSeEstaVivo(cacador, steveConstrutor);
-                    verificarSeEstaVivo(steveConstrutor, cacador);
-                    break;  
-                } 
+            System.out.println();
+            acoesPersonagem(cacador);
+            acoesPersonagem(steveConstrutor);
+            System.out.println();
+            atacarRandom(cacador, steveConstrutor);
+            tomarDano(steveConstrutor);
+            tomarDano(cacador);
+            verificarSeEstaVivo(cacador, steveConstrutor);
+            verificarSeEstaVivo(steveConstrutor, cacador);
 
             if (cacador.estaVivo()) {
-              System.out.println(cacador); 
-              System.out.println();
+                System.out.println(cacador); 
+                System.out.println();
             } 
             if (steveConstrutor.estaVivo()){
-              System.out.println(steveConstrutor);
-              System.out.println();
+                System.out.println(steveConstrutor);
+                System.out.println();
             }
             System.out.println("=============================================================");
-            Thread.sleep(0);
+            Thread.sleep(1000);
         }
     }
 
@@ -79,29 +46,32 @@ public class JogoMinecraft {
         }
     }
 
-    private static void acoesSteve(JogadorMinecraft jogador) {
-    var geradorV2 = new Random();
-    int stevePrioridade = geradorV2.nextInt(10);
+    private static void acoesPersonagem(JogadorMinecraft jogador) {
+        double probConstruir = jogador.probConstruir; 
+        double probMadeira = jogador.probMadeira; 
+        // double probMineirar = jogador.probMineirar; 
 
-    switch (stevePrioridade) {
-     case 0, 1, 2, 3, 4, 5:
-         jogador.construir();
-         break;
-    
-     case 6, 7, 8:
-         jogador.coletarMadeira();
-         break;
-    
-     case 9:
-         jogador.minerar();
-         break;
+        var geradorV2 = new Random();
+        double stevePrioridade = geradorV2.nextDouble(1); 
 
+        if (stevePrioridade < probConstruir) {
+            jogador.construir();
+            jogador.randProbs();
+            PreencherJogador.atualizarValoresDb(jogador);
+        } else if (stevePrioridade < probMadeira + probConstruir) { 
+            jogador.coletarMadeira();
+            jogador.randProbs();
+            PreencherJogador.atualizarValoresDb(jogador);
+        } else {    
+            jogador.minerar();
+            jogador.randProbs();
+            PreencherJogador.atualizarValoresDb(jogador);
+        }
     }
-    }
-    
+
     private static void tomarDano(JogadorMinecraft jogador) {
-      var geradorV3 = new Random();
-      int probDano = geradorV3.nextInt(4);
+        var geradorV3 = new Random();
+        int probDano = geradorV3.nextInt(4);
         if (probDano == 0) {
             System.out.println();
             jogador.levarDano();

@@ -8,7 +8,7 @@ public class JogadorMinecraft {
     public boolean foraDoJogo;
     public int vencedor;
     public double probConstruir;
-    public double probMadeira;
+    public double probMadeira; 
     public double probMineirar;
     public int derrotas;
     public int id;
@@ -62,6 +62,19 @@ public class JogadorMinecraft {
 
     public boolean estaVivo() {
         return vida > 0 && !foraDoJogo;
+    }
+
+    public void randProbs(){
+        var geradorR1 = new Random();
+
+        double newProbConstruir = geradorR1.nextDouble(1); 
+        double newProbMadeira = geradorR1.nextDouble(1 - newProbConstruir);
+        double newProbMineirar = (1 - (newProbConstruir + newProbMadeira));
+
+        probConstruir = newProbConstruir;
+        probMadeira = newProbMadeira;
+        probMineirar = newProbMineirar;
+
     }
 
     @Override

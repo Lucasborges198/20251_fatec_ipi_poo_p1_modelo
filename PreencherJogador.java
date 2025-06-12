@@ -39,7 +39,7 @@ public class PreencherJogador {
 
     public static void atualizarValoresDb(JogadorMinecraft jogador) {
 
-        String sql = "UPDATE tb_personagem SET nr_vitorias = ?, nr_derrotas = ? WHERE id = ?";
+        String sql = "UPDATE tb_personagem SET nr_vitorias = ?, nr_derrotas = ?, prob_construir = ?, prob_madeira = ?, prob_mineirar = ? WHERE id = ?";
         try (Connection conexao = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/postgres",
                 "postgres",
@@ -47,7 +47,10 @@ public class PreencherJogador {
                 PreparedStatement pre = conexao.prepareStatement(sql)) {
                     pre.setInt(1, jogador.vencedor);
                     pre.setInt(2, jogador.derrotas);
-                    pre.setInt(3, jogador.id);
+                    pre.setDouble(3, jogador.probConstruir);
+                    pre.setDouble(4, jogador.probMadeira);
+                    pre.setDouble(5, jogador.probMineirar);
+                    pre.setInt(6, jogador.id);
                     pre.executeUpdate();
         } catch (Exception e) {
             System.out.println("Não foi possivel realizar o update na tabela");
